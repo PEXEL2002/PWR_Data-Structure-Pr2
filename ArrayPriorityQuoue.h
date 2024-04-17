@@ -120,6 +120,9 @@ class ArrayPriorityQueue: public PriorityQueue<T>{
     int getSize() override{
         return _capacity;
     }
+/**
+ * @brief Wyświetlenie struktury
+*/
     void print(){
         for(int i=0;i<_capacity;i++){
             std::cout << _array[i].value << " " << _array[i].priority << std::endl;
