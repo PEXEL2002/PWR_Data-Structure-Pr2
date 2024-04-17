@@ -8,24 +8,6 @@ class ArrayPriorytyQueue: public PriorityQueue<T>{
         int _size;
         int _capacity;
         element<T>* _array;
-/** 
- * @brief Konstruktor domyślny
-*/
-    ArrayPriorytyQueue(){
-        _size = 10;
-        _capacity = 0;
-        _array = new T[_size];
-    }
-/**
- * @brief Konstruktor z parametrem
- * @param file nazwa pliku
-*/
-    ArrayPriorytyQueue(std::string file){
-
-    }
-    ~ArrayPriorytyQueue(){
-        delete[] _array;
-    }
 /**
  * @brief extendedArray - Powiększenie 2 krotne tablicy
 */
@@ -52,24 +34,46 @@ class ArrayPriorytyQueue: public PriorityQueue<T>{
         delete[] _array;
         _array = tempArray;
     }
+    public:
+/** 
+ * @brief Konstruktor domyślny
+*/
+    ArrayPriorytyQueue(){
+        _size = 10;
+        _capacity = 0;
+        _array = new element<T>[_size];
+    }
+/**
+ * @brief Konstruktor z parametrem
+ * @param file nazwa pliku
+*/
+    ArrayPriorytyQueue(std::string file){
+
+    }
+/**
+ * @brief Dekonstruktor
+*/
+    ~ArrayPriorytyQueue(){
+        delete[] _array;
+    }
 /**
  * @brief insert(e,p) – dodanie elementu e o priorytecie p,
 */
-    void insert(T e, int p){
+    void insert(T e, int p) override{
         if(_capacity+1 >= _size){
             extendArray();
         }
-        element<T> newItem = newItem(e,p);
+        element<T> newItem(e,p);
         _array[_capacity] = newItem;
         _capacity++;
     }
 /**
  * @brief extract-max() – usunięcie i zwrócenie elementu o największym priorytecie,
 */
-    T extractMax(){
-        int index =0
+    T extractMax() override{
+        int index = 0;
         for(int i=0;i<_capacity;i++){
-            if(_array[index].prioryty > _array[i].prioryty){
+            if(_array[index].priority < _array[i].priority){
                 index = i;
             }
         }
@@ -77,6 +81,7 @@ class ArrayPriorytyQueue: public PriorityQueue<T>{
         for(int i = index;i<_capacity-1;i++){
             _array[i] = _array[i+1];
         }
+        _capacity--;
         if ((_capacity*2)+2 == _size) {
             reduceArray();
         }
@@ -85,10 +90,10 @@ class ArrayPriorytyQueue: public PriorityQueue<T>{
 /**
  * @brief find-max()/peek() – zwrócenie (podejrzenie) elementu o największym priorytecie
 */
-    T findMax(){
-        int index =0
+    T findMax() override{
+        int index =0;
         for(int i=0;i<_capacity;i++){
-            if(_array[index].prioryty > _array[i].prioryty){
+            if(_array[index].priority > _array[i].priority){
                 index = i;
             }
         }
@@ -100,10 +105,10 @@ class ArrayPriorytyQueue: public PriorityQueue<T>{
  * @param e - wartość elementu p - nowy priorytet
  * @return 0 - nie ma takiego elementu w stukturze 1 - zmieniono priorytet
 */
-    int modyfiKey(T e, int p){
+    int modyfiKey(T e, int p) override{
         for(int i = 0;i<_capacity;i++){
             if(_array[_capacity].value == e){
-                _array[_capacity].prioryty = e;
+                _array[_capacity].priority = p;
                 return 1;
             }
         }
@@ -112,7 +117,13 @@ class ArrayPriorytyQueue: public PriorityQueue<T>{
 /**
  * @brief getSize() - zwrócenie rozmiaru tablicy
 */
-    int getSize(){
+    int getSize() override{
         return _capacity;
+    }
+    void print(){
+        for(int i=0;i<_capacity;i++){
+            std::cout << _array[i].value << " " << _array[i].priority << std::endl;
+        }
+        std::cout << std::endl;
     }
 };
