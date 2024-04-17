@@ -3,7 +3,7 @@
 #include "element.h"
 #include <string>
 template<typename T>
-class ArrayPriorytyQueue: public PriorityQueue<T>{
+class ArrayPriorityQueue: public PriorityQueue<T>{
     private:
         int _size;
         int _capacity;
@@ -38,7 +38,7 @@ class ArrayPriorytyQueue: public PriorityQueue<T>{
 /** 
  * @brief Konstruktor domyślny
 */
-    ArrayPriorytyQueue(){
+    ArrayPriorityQueue(){
         _size = 10;
         _capacity = 0;
         _array = new element<T>[_size];
@@ -47,13 +47,13 @@ class ArrayPriorytyQueue: public PriorityQueue<T>{
  * @brief Konstruktor z parametrem
  * @param file nazwa pliku
 */
-    ArrayPriorytyQueue(std::string file){
+    ArrayPriorityQueue(std::string file){
 
     }
 /**
  * @brief Dekonstruktor
 */
-    ~ArrayPriorytyQueue(){
+    ~ArrayPriorityQueue(){
         delete[] _array;
     }
 /**
@@ -93,7 +93,7 @@ class ArrayPriorytyQueue: public PriorityQueue<T>{
     T findMax() override{
         int index =0;
         for(int i=0;i<_capacity;i++){
-            if(_array[index].priority > _array[i].priority){
+            if(_array[index].priority < _array[i].priority){
                 index = i;
             }
         }
