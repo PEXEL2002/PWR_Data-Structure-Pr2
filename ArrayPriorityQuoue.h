@@ -2,6 +2,8 @@
 #include "PriorityQueue.h"
 #include "element.h"
 #include <string>
+#include <sstream>
+#include <fstream>
 template<typename T>
 class ArrayPriorityQueue: public PriorityQueue<T>{
     private:
@@ -22,8 +24,6 @@ class ArrayPriorityQueue: public PriorityQueue<T>{
     }
 /**
  * @brief reduceArray - zmniejszenie tablicy
- * @return 0 - tablica zmniejszona
- * 1 - tablica nie zmniejszona
 */
     void reduceArray(){
         _size = _size / 2;
@@ -35,6 +35,14 @@ class ArrayPriorityQueue: public PriorityQueue<T>{
         _array = tempArray;
     }
     public:
+/**
+ * @brief Sprawdzenie czy kolejka nie jest pusta
+ * @return 0 - kolejka jest pusta
+ * 1 - kolejka jest pełna
+*/
+    bool isEmpty(){
+        return _capacity;
+    }
 /** 
  * @brief Konstruktor domyślny
 */
@@ -47,8 +55,20 @@ class ArrayPriorityQueue: public PriorityQueue<T>{
  * @brief Konstruktor z parametrem
  * @param file nazwa pliku
 */
-    ArrayPriorityQueue(std::string file){
-
+    ArrayPriorityQueue(std::string data){
+        _size = 10;
+        _capacity = 0;
+        _array = new element<T>[_size]; 
+        std::ifstream file(data);
+        std::string line;
+        while (getline(file, line)) {
+            std::istringstream iss(line);
+            T value;
+            int priority;
+            if (iss >> value >> priority) {
+                insert(value,priority);
+            }
+        }
     }
 /**
  * @brief Dekonstruktor
@@ -123,7 +143,7 @@ class ArrayPriorityQueue: public PriorityQueue<T>{
 /**
  * @brief Wyświetlenie struktury
 */
-    void print(){
+    void print() override{
         for(int i=0;i<_capacity;i++){
             std::cout << _array[i].value << " " << _array[i].priority << std::endl;
         }

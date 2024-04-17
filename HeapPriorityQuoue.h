@@ -2,6 +2,8 @@
 #include "PriorityQueue.h"
 #include "element.h"
 #include <string>
+#include <sstream>
+#include <fstream>
 template<typename T>
 class HeapPriorityQueue: public PriorityQueue<T>{
 private:
@@ -18,22 +20,20 @@ private:
         }
         delete[] _heap;
         _heap = tempArray;
-        _size *= 2;
+        _size = _size*2;
     }
 /**
  * @brief Zmniejszenia tablicy
 */
     void reduceArray() {
-        if (_capacity < _size / 4) {
-            int newSize = _size / 2;
-            element<T>* tempArray = new element<T>[newSize];
-            for (int i = 0; i < _capacity; i++) {
-                tempArray[i] = _heap[i];
-            }
-            delete[] _heap;
-            _heap = tempArray;
-            _size = newSize;
+        int newSize = _size / 2;
+        element<T>* tempArray = new element<T>[newSize];
+        for (int i = 0; i < _capacity; i++) {
+            tempArray[i] = _heap[i];
         }
+        delete[] _heap;
+        _heap = tempArray;
+        _size = newSize;
     }
 /**
  * @brief Przywraca właściwości kopca, przesuwając element w górę drzewa
@@ -63,7 +63,15 @@ private:
         }
     }
 
-public:
+    public:
+/**
+ * @brief Sprawdzenie czy kolejka nie jest pusta
+ * @return 0 - kolejka jest pusta
+ * 1 - kolejka jest pełna
+*/
+    bool isEmpty(){
+        return _capacity;
+    }
 /**
  * @brief Konstruktor domyślny
 */
@@ -76,8 +84,20 @@ public:
  * @brief Konstruktor z parametrem
  * @param file nazwa pliku
 */
-    HeapPriorityQueue(std::string file){
-
+    HeapPriorityQueue(std::string data){
+        _size = 10;
+        _capacity = 0;
+        _heap = new element<T>[_size]; 
+        std::ifstream file(data);
+        std::string line;
+        while (getline(file, line)) {
+            std::istringstream iss(line);
+            T value;
+            int priority;
+            if (iss >> value >> priority) {
+                insert(value,priority);
+            }
+        }
     }
 /**
  * @brief Dekonstruktor
@@ -100,21 +120,19 @@ public:
  * @brief extract-max() – usunięcie i zwrócenie elementu o największym priorytecie,
 */
     T extractMax() override{
-        if (_capacity == 0)
-            throw std::runtime_error("Heap is empty");
         T maxValue = _heap[0].value;
         _heap[0] = _heap[_capacity - 1];
         _capacity--;
         heapifyDown(0);
-        reduceArray();
+        if ((_capacity*2)+2 == _size) {
+            reduceArray();
+        }
         return maxValue;
     }
 /**
  * @brief find-max()/peek() – zwrócenie (podejrzenie) elementu o największym priorytecie
 */
     T findMax() override{
-        if (_capacity == 0)
-            throw std::runtime_error("Heap is empty");
         return _heap[0].value;
     }
 /**
@@ -140,7 +158,7 @@ public:
 /**
  * @brief Wyświetlenie struktury
 */
-    void print(){
+    void print() override{
         for(int i=0;i<_capacity;i++){
             std::cout << _heap[i].value << " " << _heap[i].priority << std::endl;
         }
