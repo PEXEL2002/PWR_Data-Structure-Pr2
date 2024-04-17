@@ -1,3 +1,1 @@
-# Nowy plik
-
-# EO EO EO
+# Data Structure - Proj. 2
