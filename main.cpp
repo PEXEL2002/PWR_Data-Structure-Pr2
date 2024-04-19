@@ -6,7 +6,7 @@
 #include "ui.h"
 using namespace std;
 int main(){
-    int tests = 0, type;
+    int tests = 0;
     do{
         cout << "Czy przeprowadzić badania 1 - tak 0 - nie: ";
         cin >> tests;
@@ -21,8 +21,8 @@ int main(){
                 cin >> size;
             }while(size < 0);
             generateToFile(size,4);
-            HeapPriorityQueue<int> heapQuote("data.txt");
-            ArrayPriorityQueue<int> arrayQoute("data.txt");
+            HeapPriorityQueue<int> heapQueue("data.txt");
+            ArrayPriorityQueue<int> arrayQueue("data.txt");
             while(operation){
                 cout << "1. Dodaj element do kolejki\n";
                 cout << "2. Uzuń element o najwyższym priorytecie\n";
@@ -36,22 +36,22 @@ int main(){
                 switch (operation)
                 {
                 case 1:
-                    insertUi(arrayQoute,heapQuote);
+                    insertUi(arrayQueue,heapQueue);
                     break;
                 case 2:
-                    extractMaxUi(arrayQoute,heapQuote);
+                    extractMaxUi(arrayQueue,heapQueue);
                     break;
                 case 3:
-                    findMaxUi(arrayQoute,heapQuote);
+                    findMaxUi(arrayQueue,heapQueue);
                     break;
                 case 4:
-                    modyfiKeyUi(arrayQoute,heapQuote);
+                    modyfiKeyUi(arrayQueue,heapQueue);
                     break;
                 case 5:
-                    getSizeUi(arrayQoute,heapQuote);
+                    getSizeUi(arrayQueue,heapQueue);
                     break;
                 case 6:
-                    printUi(arrayQoute,heapQuote);
+                    printUi(arrayQueue,heapQueue);
                     break;
                 case 0:
                     break;

@@ -7,7 +7,6 @@
 #include "HeapPriorityQuoue.h"
 #include "ui.h"
 
-
 void generateToFile(int size, int multiply) {
     std::ofstream outFile("data.txt");
     if (!outFile.is_open()) {
@@ -19,11 +18,11 @@ void generateToFile(int size, int multiply) {
     std::random_device rd;  
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> value_dist(1, 1000000); // Zakres wartości od 1 do 1,000,000
-    std::uniform_int_distribution<> priority_dist(1, 10000); // Zakres priorytetów od 1 do 10,000
+    std::uniform_int_distribution<> priority_dist(1, size*multiply); // Zakres priorytetów od 1 do size*multyply
 
     for (int i = 0; i < size; ++i) {
         int value = value_dist(gen); // Losowa wartość z dużego zakresu
-        int priority = priority_dist(gen) * multiply; // Losowy priorytet pomnożony przez multiply z większego zakresu
+        int priority = priority_dist(gen);
         outFile << value << " " << priority << "\n";
     }
 
@@ -54,20 +53,24 @@ void insertUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ){
 
 void extractMaxUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ){
     int extract;
+    if(aPQ.isEmpty()){
+        std::cout << "Kolejki są pusta." << std::endl;
+        return;
+    }else{
+        auto start1 = std::chrono::high_resolution_clock::now();
+        extract = aPQ.extractMax();
+        auto end1 = std::chrono::high_resolution_clock::now();
+        auto duration1 = std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - start1);
 
-    auto start1 = std::chrono::high_resolution_clock::now();
-    extract = aPQ.extractMax();
-    auto end1 = std::chrono::high_resolution_clock::now();
-    auto duration1 = std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - start1);
-
-    auto start2 = std::chrono::high_resolution_clock::now();
-    hPQ.extractMax();
-    auto end2 = std::chrono::high_resolution_clock::now();
-    auto duration2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - start1);
-    std::cout << "Usunięcie elementu o nawyższm priorytecie: "<< std::endl;
-    std::cout << "ArrayPriorityQueue | " << duration1.count() << std::endl;
-    std::cout << "HeapPriorityQueue  | " << duration2.count() << std::endl;
-    std::cout << "Wartość usuniętego elementu: " << extract << std::endl;
+        auto start2 = std::chrono::high_resolution_clock::now();
+        hPQ.extractMax();
+        auto end2 = std::chrono::high_resolution_clock::now();
+        auto duration2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - start1);
+        std::cout << "Usunięcie elementu o nawyższm priorytecie: "<< std::endl;
+        std::cout << "ArrayPriorityQueue | " << duration1.count() << std::endl;
+        std::cout << "HeapPriorityQueue  | " << duration2.count() << std::endl;
+        std::cout << "Wartość usuniętego elementu: " << extract << std::endl;
+    }
 }
 
 void findMaxUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ){
@@ -103,9 +106,6 @@ void modyfiKeyUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ){
 
     auto start2 = std::chrono::high_resolution_clock::now();
     hPQ.modyfiKey(elem,priority);
-    if(result !=  hPQ.modyfiKey(elem,priority)){
-        std::cout << "NIE DIAŁAM";
-    }
     auto end2 = std::chrono::high_resolution_clock::now();
     auto duration2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - start1);
     std::cout << "Zmodyfikowanie priorytetu elementu: "<< std::endl;
@@ -126,14 +126,14 @@ void getSizeUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ){
 }
 
 void printUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ){
-    int chose; // wybór
+    int choose; 
     do{
         std::cout << "Którą strukture chcesz wyświetlić" << std::endl;
         std::cout << " 0 - ArrayPriorityQueue" << std::endl;
         std::cout << " 1 - HeapPriorityQueue" <<std::endl;
-        std::cin >> chose;
-    }while(chose !=0 && chose!=1);
-    if(chose){
+        std::cin >> choose;
+    }while(choose !=0 && choose!=1);
+    if(choose){
         hPQ.print();
     }else{
         aPQ.print();

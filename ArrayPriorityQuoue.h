@@ -37,17 +37,17 @@ class ArrayPriorityQueue: public PriorityQueue<T>{
     public:
 /**
  * @brief Sprawdzenie czy kolejka nie jest pusta
- * @return 0 - kolejka jest pusta
- * 1 - kolejka jest pełna
+ * @return 1 - kolejka jest pusta
+ * 0 - kolejka jest pełna
 */
     bool isEmpty(){
-        return _capacity;
+        return !_capacity;
     }
 /** 
  * @brief Konstruktor domyślny
 */
     ArrayPriorityQueue(){
-        _size = 10;
+        _size = 2;
         _capacity = 0;
         _array = new element<T>[_size];
     }
@@ -56,7 +56,7 @@ class ArrayPriorityQueue: public PriorityQueue<T>{
  * @param file nazwa pliku
 */
     ArrayPriorityQueue(std::string data){
-        _size = 10;
+        _size = 2;
         _capacity = 0;
         _array = new element<T>[_size]; 
         std::ifstream file(data);

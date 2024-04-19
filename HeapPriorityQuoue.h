@@ -70,13 +70,13 @@ private:
  * 1 - kolejka jest pełna
 */
     bool isEmpty(){
-        return _capacity;
+        return !_capacity;
     }
 /**
  * @brief Konstruktor domyślny
 */
     HeapPriorityQueue() {
-        _size = 10;
+        _size = 2;
         _capacity = 0;
         _heap = new element<T>[_size];
     }
@@ -85,7 +85,7 @@ private:
  * @param file nazwa pliku
 */
     HeapPriorityQueue(std::string data){
-        _size = 10;
+        _size = 2;
         _capacity = 0;
         _heap = new element<T>[_size]; 
         std::ifstream file(data);
