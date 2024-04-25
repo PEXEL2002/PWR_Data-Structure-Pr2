@@ -13,19 +13,23 @@ int main(){
     }while (tests != 0 && tests != 1);
     if(tests){
         cout << "Start Badań";
+        tests();
+        cout << "Koniec Badań"l
     }else{
         int start = 1, operation = 1, size = 0;
         while(start){
+            operation = 1;
             do{
                 cout << "Ile danych w struktórach chcesz przechowywać: ";
                 cin >> size;
             }while(size < 0);
-            generateToFile(size,4);
+            generateToFile(size);
+            std::cout << "Dane zostały wygenerowane i zapisane do pliku 'data.txt'.\n";
             HeapPriorityQueue<int> heapQueue("data.txt");
             ArrayPriorityQueue<int> arrayQueue("data.txt");
             while(operation){
                 cout << "1. Dodaj element do kolejki\n";
-                cout << "2. Uzuń element o najwyższym priorytecie\n";
+                cout << "2. Usuń element o najwyższym priorytecie\n";
                 cout << "3. Podejrzyj element o najwyższym priorytecie\n";
                 cout << "4. Zmodyfikuj priorytet elementu\n";
                 cout << "5. Zwróć rozmiar struktury\n";
@@ -33,8 +37,7 @@ int main(){
                 cout << "0. Wygeneruj dane na nowo\n";
                 cout << "Podaj operacje do wykoaniania: ";
                 cin >> operation;
-                switch (operation)
-                {
+                switch (operation){
                 case 1:
                     insertUi(arrayQueue,heapQueue);
                     break;

@@ -7,29 +7,36 @@
 #include "HeapPriorityQuoue.h"
 #include "ui.h"
 
-void generateToFile(int size, int multiply) {
-    std::ofstream outFile("data.txt");
+void generateToFile(int size, std::string fileName = "data.txt") {
+    std::ofstream outFile(fileName);
     if (!outFile.is_open()) {
         std::cerr << "Nie można otworzyć pliku do zapisu.\n";
         return;
     }
-
-    // Ustawiamy generator i dystrybucję dla dużo większego zakresu.
     std::random_device rd;  
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> value_dist(1, 1000000); // Zakres wartości od 1 do 1,000,000
-    std::uniform_int_distribution<> priority_dist(1, size*multiply); // Zakres priorytetów od 1 do size*multyply
-
+    std::uniform_int_distribution<> value_dist(0, 1000); // Zakres wartości od 0 do 1000
+    std::uniform_int_distribution<> priority_dist(0, RAND_MAX); // Zakres priorytetów od 0 do RAND_MAX
+    int value, priority;
     for (int i = 0; i < size; ++i) {
-        int value = value_dist(gen); // Losowa wartość z dużego zakresu
-        int priority = priority_dist(gen);
+        value = value_dist(gen);
+        priority = priority_dist(gen);
         outFile << value << " " << priority << "\n";
     }
-
     outFile.close();
-    std::cout << "Dane zostały wygenerowane i zapisane do pliku 'data.txt'.\n";
 }
-
+int generateRandomValue() {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(0, 1000);
+    return dist(gen);
+}
+int generateRandomPriority() {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(0, RAND_MAX);
+    return dist(gen);
+}
 void insertUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ){
     int e=0, p=0;
     std::cout << "Podaj wartość elementu: ";
@@ -140,4 +147,18 @@ void printUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ){
     }
 }
 
-void tests();
+void tests(){
+    int * sizes[7] = {1000, 5000, 10000, 50000, 100000, 500000, 1000000};
+    int numberOfStructures = 100, value, priority, ;
+    std::string file;
+    for(int size = 0; size < 7; size++){ // Rozmiar danych
+        for(int i = 1; i < 6;i++){ // Ilość różnych zestawów danych
+            file += "data_" + std::to_string(i)+"_"+ std::to_string(sizes[size])+".txt";
+            generateToFile(size[size],file);
+            for(int j = 0;j < numberOfStructures;j++){
+                
+            }
+            file = "";
+        }
+    }
+}

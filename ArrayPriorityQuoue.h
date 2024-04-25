@@ -127,8 +127,36 @@ class ArrayPriorityQueue: public PriorityQueue<T>{
 */
     int modyfiKey(T e, int p) override{
         for(int i = 0;i<_capacity;i++){
-            if(_array[_capacity].value == e){
-                _array[_capacity].priority = p;
+            if(_array[i].value == e){
+                _array[i].priority = p;
+                return 1;
+            }
+        }
+        return 0;
+    }
+/**
+ * @brief zwiększenie priorytetu o 1 
+ * @param e - wartość elementu dla którego zwiększamy priorytet
+ * @return 0 - nie ma takiego elementu w stukturze 1 - zmieniono priorytet
+*/
+    int increaseKey(T e) override{
+        for(int i = 0;i<_capacity;i++){
+            if(_array[i].value == e){
+                _array[i].priority ++;
+                return 1;
+            }
+        }
+        return 0;
+    }
+/**
+ * @brief zmniejsza priorytetu o 1 
+ * @param e - wartość elementu dla którego zwiększamy priorytet
+ * @return 0 - nie ma takiego elementu w stukturze 1 - zmieniono priorytet
+*/
+    int reduceKey(T e) override{
+        for(int i = 0;i<_capacity;i++){
+            if(_array[i].value == e){
+                _array[i].priority --;
                 return 1;
             }
         }

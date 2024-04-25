@@ -7,7 +7,16 @@
  * @param size Rozmiar danych do wygenerowania.
 */
 void generateToFile(int size, int multiply) ;
-
+/**
+ * @brief Generuje liczbę z zakresu od 0 do 1000
+ * @return wygenerowana liczba
+*/
+int generateRandomNumber();
+/**
+ * @brief Generuje priorytet z zakresu od 0 do RAND_MAX
+ * @return wygenerowany priorytet
+*/
+int generateRandomPriority();
 /**
  * @brief Wstawia element do kolejek priorytetowych.
  * @param aPQ Obiekt ArrayPriorityQueue.

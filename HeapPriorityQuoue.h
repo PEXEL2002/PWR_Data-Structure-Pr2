@@ -109,7 +109,7 @@ private:
  * @brief insert(e,p) – dodanie elementu e o priorytecie p,
 */
     void insert(T e, int p) override{
-        if (_capacity == _size) {
+        if (_capacity+1 >= _size) {
             extendArray();
         }
         _heap[_capacity] = element<T>(e, p);
@@ -142,8 +142,42 @@ private:
 */
     int modyfiKey(T e, int p) override{
         for(int i = 0;i<_capacity;i++){
-            if(_heap[_capacity].value == e){
-                _heap[_capacity].priority = p;
+            if(_heap[i].value == e){
+                _heap[i].priority = p;
+                heapifyDown(i);
+                heapifyUp(i);
+                return 1;
+            }
+        }
+        return 0;
+    }
+/**
+ * @brief zwiększenie priorytetu o 1 
+ * @param e - wartość elementu dla którego zwiększamy priorytet
+ * @return 0 - nie ma takiego elementu w stukturze 1 - zmieniono priorytet
+*/
+    int increaseKey(T e) override{
+        for(int i = 0;i<_capacity;i++){
+            if(_heap[i].value == e){
+                _heap[i].priority ++;
+                heapifyDown(i);
+                heapifyUp(i);
+                return 1;
+            }
+        }
+        return 0;
+    }
+/**
+ * @brief zmniejsza priorytetu o 1 
+ * @param e - wartość elementu dla którego zwiększamy priorytet
+ * @return 0 - nie ma takiego elementu w stukturze 1 - zmieniono priorytet
+*/
+    int reduceKey(T e) override{
+        for(int i = 0;i<_capacity;i++){
+            if(_heap[i].value == e){
+                _heap[i].priority --;
+                heapifyDown(i);
+                heapifyUp(i);
                 return 1;
             }
         }
