@@ -6,15 +6,15 @@
 #include "ui.h"
 using namespace std;
 int main(){
-    int tests = 0;
+    int ntests = 0;
     do{
         cout << "Czy przeprowadzić badania 1 - tak 0 - nie: ";
-        cin >> tests;
-    }while (tests != 0 && tests != 1);
-    if(tests){
+        cin >> ntests;
+    }while (ntests != 0 && ntests != 1);
+    if(ntests){
         cout << "Start Badań";
         tests();
-        cout << "Koniec Badań"l
+        cout << "Koniec Badań";
     }else{
         int start = 1, operation = 1, size = 0;
         while(start){
@@ -32,8 +32,10 @@ int main(){
                 cout << "2. Usuń element o najwyższym priorytecie\n";
                 cout << "3. Podejrzyj element o najwyższym priorytecie\n";
                 cout << "4. Zmodyfikuj priorytet elementu\n";
-                cout << "5. Zwróć rozmiar struktury\n";
-                cout << "6. Wyświetl zawartośc struktór\n";
+                cout << "5. Zmniejsz o 1 priorytet elementu\n";
+                cout << "6. Zwiększenie o 1 priorytery elementu\n";
+                cout << "7. Zwróć rozmiar struktury\n";
+                cout << "8. Wyświetl zawartośc struktór\n";
                 cout << "0. Wygeneruj dane na nowo\n";
                 cout << "Podaj operacje do wykoaniania: ";
                 cin >> operation;
@@ -51,9 +53,15 @@ int main(){
                     modyfiKeyUi(arrayQueue,heapQueue);
                     break;
                 case 5:
-                    getSizeUi(arrayQueue,heapQueue);
+                    increaseKeyUi(arrayQueue,heapQueue);
                     break;
                 case 6:
+                    reduceKeyUi(arrayQueue,heapQueue);
+                    break;
+                case 7:
+                    getSizeUi(arrayQueue,heapQueue);
+                    break;
+                case 9:
                     printUi(arrayQueue,heapQueue);
                     break;
                 case 0:

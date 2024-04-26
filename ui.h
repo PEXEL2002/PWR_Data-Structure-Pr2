@@ -6,7 +6,7 @@
  * @brief Generuje plik z danymi.
  * @param size Rozmiar danych do wygenerowania.
 */
-void generateToFile(int size, int multiply) ;
+void generateToFile(int size, std::string fileName = "data.txt") ;
 /**
  * @brief Generuje liczbę z zakresu od 0 do 1000
  * @return wygenerowana liczba
@@ -42,11 +42,22 @@ void findMaxUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ);
 */
 void modyfiKeyUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ);
 /**
+ * @brief Zwiększa klucz elementu w kolejce priorytetowej.
+ * @param aPQ Obiekt ArrayPriorityQueue.
+ * @param hPQ Obiekt HeapPriorityQueue.
+*/
+void increaseKeyUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ);
+/**
+ * @brief Zmniejsza klucz elementu w kolejce priorytetowej.
+ * @param aPQ Obiekt ArrayPriorityQueue.
+ * @param hPQ Obiekt HeapPriorityQueue.
+*/
+void reduceKeyUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ);
+/**
  * @brief Zwraca rozmiar kolejek priorytetowych.
  * @param aPQ Obiekt ArrayPriorityQueue.
  * @param hPQ Obiekt HeapPriorityQueue.
 */
-
 void getSizeUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ);
 /**
  * @brief Wypisuje elementy kolejek priorytetowych.

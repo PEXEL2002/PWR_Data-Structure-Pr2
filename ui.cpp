@@ -7,7 +7,7 @@
 #include "HeapPriorityQuoue.h"
 #include "ui.h"
 
-void generateToFile(int size, std::string fileName = "data.txt") {
+void generateToFile(int size, std::string fileName) {
     std::ofstream outFile(fileName);
     if (!outFile.is_open()) {
         std::cerr << "Nie można otworzyć pliku do zapisu.\n";
@@ -125,7 +125,56 @@ void modyfiKeyUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ){
     }
     std::cout << std::endl;
 }
+void increaseKeyUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ){
+    int elem;
+    std::cout << "Podaja wartoś elementu którego szukasz: ";
+    std::cin >> elem;
+    int result;
 
+    auto start1 = std::chrono::high_resolution_clock::now();
+    result = aPQ.increaseKey(elem);
+    auto end1 = std::chrono::high_resolution_clock::now();
+    auto duration1 = std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - start1);
+
+    auto start2 = std::chrono::high_resolution_clock::now();
+    hPQ.increaseKey(elem);
+    auto end2 = std::chrono::high_resolution_clock::now();
+    auto duration2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - start1);
+    std::cout << "Zwiększenie priorytetu o 1 elementu: "<< std::endl;
+    std::cout << "ArrayPriorityQueue | " << duration1.count() << std::endl;
+    std::cout << "HeapPriorityQueue  | " << duration2.count() << std::endl;
+    if(result){
+        std::cout << "Zwiększono priorytet o 1 elementu o wartości: " << elem;
+    }else{
+        std::cout << "Nie znaleziono żadnego elementu o wartości " << elem;
+    }
+    std::cout << std::endl;
+}
+void reduceKeyUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ){
+     int elem;
+    std::cout << "Podaja wartoś elementu którego szukasz: ";
+    std::cin >> elem;
+    int result;
+
+    auto start1 = std::chrono::high_resolution_clock::now();
+    result = aPQ.reduceKey(elem);
+    auto end1 = std::chrono::high_resolution_clock::now();
+    auto duration1 = std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - start1);
+
+    auto start2 = std::chrono::high_resolution_clock::now();
+    hPQ.reduceKey(elem);
+    auto end2 = std::chrono::high_resolution_clock::now();
+    auto duration2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - start1);
+    std::cout << "Zmniejszenie priorytetu o 1 elementu: "<< std::endl;
+    std::cout << "ArrayPriorityQueue | " << duration1.count() << std::endl;
+    std::cout << "HeapPriorityQueue  | " << duration2.count() << std::endl;
+    if(result){
+        std::cout << "Zmniejszenie priorytetu o 1 elementu o wartości: " << elem;
+    }else{
+        std::cout << "Nie znaleziono żadnego elementu o wartości " << elem;
+    }
+    std::cout << std::endl;
+}
 void getSizeUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ){
     std::cout << "Rozmiary struktór: " << std::endl;
     std::cout << "ArrayPriorityQueue | " << aPQ.getSize() << std::endl;
@@ -148,17 +197,20 @@ void printUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ){
 }
 
 void tests(){
-    int * sizes[7] = {1000, 5000, 10000, 50000, 100000, 500000, 1000000};
-    int numberOfStructures = 100, value, priority, ;
+    int sizes[7] = {1000, 5000, 10000, 50000, 100000, 500000, 1000000};
+    int numberOfStructures = 100, value, priority;
     std::string file;
     for(int size = 0; size < 7; size++){ // Rozmiar danych
         for(int i = 1; i < 6;i++){ // Ilość różnych zestawów danych
             file += "data_" + std::to_string(i)+"_"+ std::to_string(sizes[size])+".txt";
-            generateToFile(size[size],file);
+            generateToFile(10,file);
+            std::vector<HeapPriorityQueue<int>> VHPQ;
             for(int j = 0;j < numberOfStructures;j++){
-                
+
+
             }
             file = "";
+            return;
         }
     }
 }
