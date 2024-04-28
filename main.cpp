@@ -12,9 +12,9 @@ int main(){
         cin >> ntests;
     }while (ntests != 0 && ntests != 1);
     if(ntests){
-        cout << "Start Badań";
+        cout << "Start Badań\n";
         tests();
-        cout << "Koniec Badań";
+        cout << "Koniec Badań\n";
     }else{
         int start = 1, operation = 1, size = 0;
         while(start){

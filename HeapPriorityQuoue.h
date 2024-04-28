@@ -49,8 +49,8 @@ private:
 */
     void heapifyDown(int index) {
         int largest = index;
-        int left = 2 * index + 1;
-        int right = 2 * index + 2;
+        int left = (2 * index) + 1;
+        int right = (2 * index) + 2;
 
         if (left < _capacity && _heap[left].priority > _heap[largest].priority)
             largest = left;
@@ -160,7 +160,6 @@ private:
         for(int i = 0;i<_capacity;i++){
             if(_heap[i].value == e){
                 _heap[i].priority ++;
-                heapifyDown(i);
                 heapifyUp(i);
                 return 1;
             }
@@ -177,7 +176,6 @@ private:
             if(_heap[i].value == e){
                 _heap[i].priority --;
                 heapifyDown(i);
-                heapifyUp(i);
                 return 1;
             }
         }
