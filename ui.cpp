@@ -16,7 +16,7 @@ void generateToFile(int size, std::string fileName) {
     std::random_device rd;  
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> value_dist(0, 1000); // Zakres wartości od 0 do 1000
-    std::uniform_int_distribution<> priority_dist(0, RAND_MAX); // Zakres priorytetów od 0 do RAND_MAX
+    std::uniform_int_distribution<> priority_dist(0, 100); // Zakres priorytetów od 0 do RAND_MAX
     int value, priority;
     for (int i = 0; i < size; ++i) {
         value = value_dist(gen);
@@ -195,9 +195,8 @@ void printUi(ArrayPriorityQueue<int> &aPQ, HeapPriorityQueue<int> &hPQ){
         aPQ.print();
     }
 }
-
 void tests(){
-    int sizes[7] = {1000, 5000, 10000, 50000, 100000, 500000, 1000000};
+    int sizes[8] = {1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000};
     std::string file;
     std::ofstream saveFile("research.csv");
     saveFile << "Set;Rozmiar;Struktura;Operacja;Czas\n";
@@ -209,15 +208,14 @@ void tests(){
         return;
     }
     //Generacja plików do struktór
-    for(int set = 0 ; set<5;set++){
+    for(int set = 0 ; set<10;set++){
         for(int size: sizes){
             file = "data_" + std::to_string(set+1) + "_" + std::to_string(size) + ".txt";
             generateToFile(size,file);
         }
     }
-    /*
     //insert
-    for(int set = 0 ; set<5;set++){
+    for(int set = 0 ; set<10;set++){
         val = generateRandomValue();
         prior = generateRandomPriority();
         for(int size: sizes){
@@ -246,7 +244,7 @@ void tests(){
         }
     }
     //extractMax  
-    for(int set = 0 ; set<5;set++){
+    for(int set = 0 ; set<10;set++){
         for(int size: sizes){
             file = "data_" + std::to_string(set+1) + "_" + std::to_string(size) + ".txt";
             sumHeap = 0;
@@ -273,19 +271,27 @@ void tests(){
         }
     }
     //findMax
-    for(int set = 0 ; set<5;set++){
+    for(int set = 0 ; set<10;set++){
         for(int size: sizes){
             file = "data_" + std::to_string(set+1) + "_" + std::to_string(size) + ".txt";
             sumHeap = 0;
-            sumArray = 0;
             for(int i = 0; i < 100;i++){
                 HeapPriorityQueue<int>* queue = new HeapPriorityQueue<int>(file);
-                auto start1 = std::chrono::high_resolution_clock::now();
-                queue->findMax();
-                auto end1 = std::chrono::high_resolution_clock::now();
-                sumHeap += (std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - start1)).count();
+                    auto start1 = std::chrono::high_resolution_clock::now();
+                    queue->findMax();
+                    auto end1 = std::chrono::high_resolution_clock::now();
+                    sumHeap += (std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - start1)).count();
                 delete queue;
-
+            }
+            saveFile << set << ";" << size << ";HeapPriorityQueue" << ";findMax" << ";" <<  (sumHeap/100) << "\n";
+            std::cout << set << ";" << size << ";HeapPriorityQueue" << ";findMax" <<";" << (sumHeap/100) << "\n";
+        }
+    }
+    for(int set = 0 ; set<10;set++){
+        for(int size: sizes){
+            file = "data_" + std::to_string(set+1) + "_" + std::to_string(size) + ".txt";
+            sumArray = 0;
+            for(int i = 0; i < 100;i++){
                 ArrayPriorityQueue<int>* array = new ArrayPriorityQueue<int>(file);
                 auto start2 = std::chrono::high_resolution_clock::now();
                 array->findMax();
@@ -293,15 +299,13 @@ void tests(){
                 sumArray += (std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - start2)).count();
                 delete array;
             }
-            saveFile << set << ";" << size << ";HeapPriorityQueue" << ";findMax" << ";" <<  (sumHeap/100) << "\n";
+           
             saveFile << set << ";" << size << ";ArrayPriorityQueue" << ";findMax" <<";" << (sumArray/100) << "\n";
-            std::cout << set << ";" << size << ";HeapPriorityQueue" << ";findMax" <<";" << (sumHeap/100) << "\n";
             std::cout << set << ";" << size << ";ArrayPriorityQueue" << ";findMax" <<";" << (sumArray/100) << "\n";
         }
     }
-    */
     //increaseKey
-    for(int set = 0 ; set<5;set++){
+    for(int set = 0 ; set<10;set++){
         for(int size: sizes){
             file = "data_" + std::to_string(set+1) + "_" + std::to_string(size) + ".txt";
             val = generateRandomValue();
@@ -326,9 +330,8 @@ void tests(){
             std::cout << set << ";" << size << ";ArrayPriorityQueue" << ";increaseKey" <<";" << (sumArray/100) << "\n";
         }
     }
-    /*
     //reduceKey
-    for(int set = 0 ; set<5;set++){
+    for(int set = 0 ; set<10;set++){
         for(int size: sizes){
             file = "data_" + std::to_string(set+1) + "_" + std::to_string(size) + ".txt";
             val = generateRandomValue();
@@ -354,7 +357,7 @@ void tests(){
         }
     }
     //modyfiKey
-    for(int set = 0 ; set<5;set++){
+    for(int set = 0 ; set<10;set++){
         for(int size: sizes){
             file = "data_" + std::to_string(set+1) + "_" + std::to_string(size) + ".txt";
             val = generateRandomValue();
@@ -380,7 +383,5 @@ void tests(){
             std::cout << set << ";" << size << ";ArrayPriorityQueue" << ";modyfiKey" <<";" << (sumArray/100) << "\n";
         }
     }
-    */
-
     saveFile.close();
 }
