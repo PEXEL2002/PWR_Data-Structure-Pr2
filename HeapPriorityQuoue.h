@@ -145,11 +145,11 @@ private:
             if(_heap[i].value == e){
                 int oldPriority = _heap[i].priority;
                 _heap[i].priority = p;
-                if(oldPriority < p)
-                    heapifyDown(i)
-                else if(oldPriority > p)
+                if(oldPriority < p){
                     heapifyDown(i);
-                return 1;
+                }else if(oldPriority > p){
+                    heapifyDown(i);
+                }return 1;
             }
         }
         return 0;
