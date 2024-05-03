@@ -143,9 +143,12 @@ private:
     int modyfiKey(T e, int p) override{
         for(int i = 0;i<_capacity;i++){
             if(_heap[i].value == e){
+                int oldPriority = _heap[i].priority;
                 _heap[i].priority = p;
-                heapifyDown(i);
-                heapifyUp(i);
+                if(oldPriority < p)
+                    heapifyDown(i)
+                else if(oldPriority > p)
+                    heapifyDown(i);
                 return 1;
             }
         }
