@@ -61,7 +61,7 @@ int main(){
                 case 7:
                     getSizeUi(arrayQueue,heapQueue);
                     break;
-                case 9:
+                case 8:
                     printUi(arrayQueue,heapQueue);
                     break;
                 case 0:
